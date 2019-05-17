@@ -23,13 +23,16 @@ public class UserServiceImpl implements UserService {
 
 		userEntity.setEncryptedPassword("test");
 		userEntity.setUserId("testUserId");
-
+		userEntity.setEmailVerificationStatus(true);
 		UserEntity storedUserDetails = userRepository.save(userEntity);
 
 		UserDto returnValue = new UserDto();
 		BeanUtils.copyProperties(storedUserDetails, returnValue);
 
 		return returnValue;
+	}
+	public void setUserRepository(UserRepository userRepository) {
+		this.userRepository = userRepository;
 	}
 
 }

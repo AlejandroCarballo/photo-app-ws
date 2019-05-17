@@ -5,13 +5,11 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-
-import org.springframework.data.annotation.Id;
+import javax.persistence.Id;
 
 @Entity
 public class UserEntity implements Serializable {
 
-	
 	private static final long serialVersionUID = 5837190425078952703L;
 
 	@Id
@@ -36,7 +34,7 @@ public class UserEntity implements Serializable {
 	private String emailVerificationToken;
 
 	@Column(nullable = false, columnDefinition = "boolean default false")
-	private String emailVerificationStatus;
+	private Boolean emailVerificationStatus;
 
 	public long getId() {
 		return id;
@@ -94,11 +92,11 @@ public class UserEntity implements Serializable {
 		this.emailVerificationToken = emailVerificationToken;
 	}
 
-	public String getEmailVerificationStatus() {
+	public Boolean getEmailVerificationStatus() {
 		return emailVerificationStatus;
 	}
 
-	public void setEmailVerificationStatus(String emailVerificationStatus) {
+	public void setEmailVerificationStatus(Boolean emailVerificationStatus) {
 		this.emailVerificationStatus = emailVerificationStatus;
 	}
 
