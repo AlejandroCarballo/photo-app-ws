@@ -12,12 +12,16 @@ import com.appsdeveloperblog.app.ws.shared.dto.UserDto;
 @Service
 public class UserServiceImpl implements UserService {
 
-	@Autowired 
+	@Autowired
 	UserRepository userRepository;
 
 	@Override
 	public UserDto createUser(UserDto user) {
 
+		if (userRepository.findByEmail(user.getEmail()) != null)
+			throw new RuntimeException("Record already exits");
+		
+		
 		UserEntity userEntity = new UserEntity();
 		BeanUtils.copyProperties(user, userEntity);
 
@@ -31,6 +35,7 @@ public class UserServiceImpl implements UserService {
 
 		return returnValue;
 	}
+
 	public void setUserRepository(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
