@@ -31,8 +31,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDto createUser(UserDto user) {
 
-		if (userRepository.findByEmail(user.getEmail()) != null)
-			throw new RuntimeException("Record already exits");
+	/*	if (userRepository.findByEmail(user.getEmail()) != null)
+			throw new RuntimeException("Record already exits");*/
 
 		UserEntity userEntity = new UserEntity();
 		BeanUtils.copyProperties(user, userEntity);
