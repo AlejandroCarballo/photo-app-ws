@@ -1,14 +1,19 @@
 package com.appsdeveloperblog.app.ws.service.impl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.appsdeveloperblog.app.ws.exceptions.UserServiceException;
 import com.appsdeveloperblog.app.ws.io.entity.UserEntity;
@@ -80,7 +85,7 @@ public class UserServiceImpl implements UserService {
 		UserDto returnValue = new UserDto();
 		UserEntity userEntity = userRepository.findByUserId(userId);
 		if (userEntity == null)
-			throw new UsernameNotFoundException(userId);
+			throw new UsernameNotFoundException("User with ID:" + userId + " not found ");
 		BeanUtils.copyProperties(userEntity, returnValue);
 		return returnValue;
 	}
@@ -98,6 +103,40 @@ public class UserServiceImpl implements UserService {
 		
 		UserEntity updateUserDetails = userRepository.save(userEntity);
 		BeanUtils.copyProperties(updateUserDetails, returnValue);
+		
+		return returnValue;
+	}
+
+	@Transactional
+	@Override
+	public void deletUser(String userId) {
+		
+		UserEntity userEntity = userRepository.findByUserId(userId);
+		
+		if (userEntity == null)
+			throw new UserServiceException(ErrorMessages.NOT_RECORD_FOUND.getErrorMessage());
+		
+		userRepository.delete(userEntity);
+		
+	}
+
+	@Override
+	public List<UserDto> getUser(int page, int limit) {
+		List<UserDto> returnValue = new ArrayList<>();
+		
+		Pageable pabeableRequest = PageRequest.of(page, limit);
+		
+		Page<UserEntity> userPage = userRepository.findAll(pabeableRequest);
+		
+		List<UserEntity> users = userPage.getContent();
+		
+		for (UserEntity userEntity : users) {
+			
+			UserDto userDto = new UserDto();
+			BeanUtils.copyProperties(userEntity, userDto);
+			
+			returnValue.add(userDto);
+		}
 		
 		return returnValue;
 	}
