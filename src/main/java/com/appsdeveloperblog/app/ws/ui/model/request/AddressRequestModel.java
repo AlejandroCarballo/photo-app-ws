@@ -7,6 +7,8 @@ public class AddressRequestModel {
 	private String streetName;
 	private String postalCode;
 	private String type;
+	
+	
 	public String getCity() {
 		return city;
 	}

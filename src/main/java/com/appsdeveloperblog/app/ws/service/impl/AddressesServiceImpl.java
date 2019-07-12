@@ -11,12 +11,12 @@ import com.appsdeveloperblog.app.ws.io.entity.AddressEntity;
 import com.appsdeveloperblog.app.ws.io.entity.UserEntity;
 import com.appsdeveloperblog.app.ws.io.repositories.AddressRepository;
 import com.appsdeveloperblog.app.ws.io.repositories.UserRepository;
-import com.appsdeveloperblog.app.ws.service.AddressesService;
+import com.appsdeveloperblog.app.ws.service.AddressService;
 import com.appsdeveloperblog.app.ws.shared.dto.AddressDTO;
 import com.appsdeveloperblog.app.ws.ui.model.response.AddressesRest;
 
 @Service
-public class AddressesServiceImpl implements AddressesService {
+public class AddressesServiceImpl implements AddressService {
 
 	@Autowired
 	UserRepository userRepository;
